@@ -1,0 +1,186 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+<style>
+.slider {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow-x: auto;
+}
+.lava{
+    word-break:break-all;
+    min-width:60px;
+}
+
+</style>
+    
+<div class="container" style="height:100% ;width:100%" >
+    <div class="slider"  >
+        <div class="jumbotron">
+        <h1>Directeurs de cabinet</h1>
+                <table id="example" class="cell-border">
+                    <thead>
+                        <tr>
+                         
+                            <th>Nom</th>
+                            <th>Prenoms</th>
+                            <th>Date_Nomin</th>
+                            <th>Arrete_Nomin</th>
+                            <th>Date_Abrog</th>
+                            <th>Arrete_Abrog</th>
+                            <th>Titre</th>
+                            <th>Phone</th>
+                            <th>DepNum</th>
+                            <th>Depute</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for dircab in dircabs %}
+                        <tr>
+                         
+                            <td>{{ dircab.Nom }}</td>
+                            <td>{{ dircab.Prenoms }}</td>
+                            <td>{{ dircab.DateNomin ? dircab.DateNomin|date('Y-m-d') : '' }}</td>
+                            <td>{{ dircab.ArreteNomin }}</td>
+                            <td>{{ dircab.DateAbrog ? dircab.DateAbrog|date('Y-m-d') : '' }}</td>
+                            <td>{{ dircab.ArreteAbrog }}</td>
+                            <td>{{ dircab.titre }}</td>
+                            <td>{{ dircab.Phone }}</td>
+                            <td>{{ dircab.Depute.Num }}</td>
+                            <td>{{ dircab.Depute}}</td>
+                            <td>
+                                <a href="{{ path('dircab_show', {'id': dircab.id}) }}">Afficher</a>
+                              
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="11">pas d'enregistrement</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+    
+        </div>   
+    </div>             
+</div>
+<script>
+$(document).ready(function () {
+    // Setup - add a text input to each footer cell
+    $('#example thead tr')
+        .clone(true)
+        .addClass('filters')
+        .appendTo('#example thead');
+ 
+    var table = $('#example').DataTable({
+       
+        language: {
+            url: '{{asset('datatable/fr.json')}}'
+        },
+        orderCellsTop: true,
+        fixedHeader: true,
+        initComplete: function () {
+            var api = this.api();
+ 
+            // For each column
+            api
+                .columns()
+                .eq(0)
+                .each(function (colIdx) {
+                    // Set the header cell to contain the input element
+                    var cell = $('.filters th').eq(
+                        $(api.column(colIdx).header()).index()
+                    );
+                    var title = $(cell).text();
+
+                    switch (title) { 
+                                 case "DepNum":
+                                     $(cell).html('<input type="text" style = "width:100%" placeholder="' + title + '" />');
+                                    break;
+                                case "Titre":
+                                     $(cell).html('<input type="text" style = "width:120%" placeholder="' + title + '" />');
+                                    break;
+                                case "Date_Nomin":
+                                     $(cell).html('<input type="text" style = "width:100%" placeholder="' + title + '" />');
+                                    break;
+                                 case "Date_Abrog":
+                                     $(cell).html('<input type="text" style = "width:100%" placeholder="' + title + '" />');
+                                    break;
+                                case "actions":
+                                     $(cell).html('<p></p>');
+                                    break; 
+                                default:
+                                     $(cell).html('<input type="text" placeholder="' + title + '" />');
+                                }
+
+                    // On every keypress in this input
+                    $(
+                        'input',
+                        $('.filters th').eq($(api.column(colIdx).header()).index())
+                    )
+                        .off('keyup change')
+                        .on('keyup change', function (e) {
+                            e.stopPropagation();
+ 
+                            // Get the search value
+                            $(this).attr('title', $(this).val());
+                            var regexr = '({search})'; //$(this).parents('th').find('select').val();
+ 
+                            var cursorPosition = this.selectionStart;
+                            // Search the column for that value
+                            api
+                                .column(colIdx)
+                                .search(
+                                    this.value != ''
+                                        ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                        : '',
+                                    this.value != '',
+                                    this.value == ''
+                                )
+                                .draw();
+ 
+                            $(this)
+                                .focus()[0]
+                                .setSelectionRange(cursorPosition, cursorPosition);
+                        });
+                });
+        },
+       
+     dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel',{
+                extend:'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                   
+                },
+                 orientation: 'landscape',
+                    pageSize: 'LEGAL'},
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            'colvis'
+        ],
+        columnDefs: [ {
+
+            targets: -1,
+            visible: true
+            
+        }
+         ]
+           
+    });
+     
+});
+
+
+</script>
+{% endblock %}

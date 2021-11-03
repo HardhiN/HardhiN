@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <h1>Liste des utilisateurs</h1>
+<div class="container" style="height:100% ;width:100%" >
+    
+        <div class="jumbotron">
+                <div class="slider"  >
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Email</th>
+                                    <th>Roles</th>
+                                    <th>Mots de passe</th>
+                                    <th>actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in users %}
+                                <tr>
+                                     <td>{{ user.id }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                                    <td>******</td>
+                                    <td>
+                                        <a href="{{ path('user_show', {'id': user.id}) }}">Afficher</a>
+                                        <a href="{{ path('user_edit', {'id': user.id}) }}">editer</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Pas d'enregistrement</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+           
+
+
+    <a href="{{ path('user_new') }}">Creer</a>
+           </div>
+        </div>
+   </div>
+{% endblock %}

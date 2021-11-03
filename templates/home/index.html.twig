@@ -1,0 +1,69 @@
+
+{% block style %}
+
+{% endblock %}
+
+{% block body %}
+<style>
+body {
+	margin: 0;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(to right bottom, white, green);
+	background-image: url("{{ asset('images/articles/modern.jpg') }} ");
+}
+
+nav ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+nav ul li {
+	font-size: 40px;
+	font-family: sans-serif;
+	background-color: white;
+	border: 2px solid black;
+	letter-spacing: 0.1em;
+	width: 6em;
+	height: 1.5em;
+	line-height: 1.5em;
+	position: relative;
+	overflow: hidden;
+	margin: 0.5em;
+	cursor: pointer;
+}
+
+nav ul li span {
+	color: white;
+	mix-blend-mode: difference;
+}
+
+nav ul li::before {
+	content: '';
+	position: absolute;
+	width: 1.5em;
+	height: inherit;
+	background-color: black;
+	border-radius: 50%;
+	top: 0;
+	left: -0.75em;
+	transition: 0.5s ease-out;
+}
+
+nav ul li:hover::before {
+	transform: scale(7);
+}
+
+</style>
+<nav>
+  <ul>
+   <a href="{{ path('home') }}"><li><span>Acceuil</span></li></a>
+    <a href="{{ path('depute_index') }}"><li ><span>Deputes</span></li></a>
+    <a href="{{ path('conseiller_index') }}"><li><span>Conseillers</span></li></a>
+   <a href="{{ path('assistant_index') }}"> <li><span>Assistants</span></li></a>
+  	<a href="{{ path('dircab_index') }}"><li><span>Dircab</span></li></a>
+  </ul>
+</nav>
+{% endblock %}

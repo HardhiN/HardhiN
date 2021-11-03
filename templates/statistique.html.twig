@@ -1,0 +1,218 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+
+{% block main %}
+{% block style %}
+<style>
+        .col-md-5{
+        
+         display: inline-block; 
+         margin: 5px 40px 20px 10px;
+        }
+
+        .row{
+         display: inline-block; 
+        }
+        
+</style>
+{% endblock %}
+<link rel="stylesheet" href="{{asset('css/Chart.min.css')}}" />
+<div class="container"  >
+<h1>Statistique</h1>
+   <div class="row">
+                <div class="col-md-5">
+                        <div class = " card bg-light " style="min-width: 30rem;">
+                                <div class="card-header">Deputes et Personnels d'apuis au Parlementaires</div>
+                                    <div class="card-body">           
+                                                <canvas id="myChart" width="200" height="100"></canvas>
+                                </div>
+                        </div>
+                </div>       
+                
+                <div class="col-md-5">
+                        <div class = " card bg-light " style="min-width: 30rem;">
+                                <div class="card-header">Assistants parlementaires par titre</div>
+                                    <div class="card-body"> 
+                                                    
+                                        <canvas id="myChart1" width="200" height="100"></canvas>
+
+                                </div>
+                        </div>
+                </div>   
+                 
+
+
+                <div class="col-md-5">
+                        <div class = "card bg-light " style="min-width: 30rem;">
+                                <div class="card-header">Assistants parlementaires par titre</div>
+                                    <div class="card-body"> 
+                                        <canvas id="myChart2" width="200" height="100"></canvas>
+
+                                    </div>
+                        </div>
+                </div>                             
+                
+                <div class="col-md-5">
+                        <div class = " card bg-light " style="min-width: 30rem;">
+                                <div class="card-header">  Personnels d'apuis au Parlementaires abrogés</div>
+                                    <div class="card-body"> 
+                                             <canvas id="myChart3" width="200" height="100"></canvas>
+                                    </div>
+                        </div>
+                </div>   
+                
+
+    </div>  
+</div>
+<script src="{{asset('Chartjs/Chart.min.js')}}"></script>
+<script>
+let ctx = document.querySelector("#myChart");
+let myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['deputes', 'assistants', 'conseillers','dircab'],
+        datasets: [{
+            label: '# of Votes',
+            data: [{{depCount}}, {{assCount}},{{consCount}},{{dirCount}}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+<script>
+let ctx1 = document.querySelector("#myChart1");
+let myChart1 = new Chart(ctx1, {
+    type: 'pie',
+    data: {
+        labels: ['APP', 'APNP', 'ATP', 'ATNP'],
+        datasets: [{
+            label: '# Assistants',
+            data: [{{APP}}, {{APNP}}, {{ATP}}, {{ATNP}}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+<script>
+let ctx2 = document.querySelector("#myChart2");
+let myChart2 = new Chart(ctx2, {
+    type: 'pie',
+    data: {
+        labels: ['CTP', 'CTNP'],
+        datasets: [{
+            label: ' abrogés',
+            data: [{{CTP}}, {{CTNP}}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+<script>
+let ctx3 = document.querySelector("#myChart3");
+let myChart3 = new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: [ 'assistants', 'conseillers','dircab'],
+        datasets: [{
+            label: 'Abrogés',
+            data: [{{AssAbrog}}, {{ConsAbrog}},{{DirAbrog}}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}
+

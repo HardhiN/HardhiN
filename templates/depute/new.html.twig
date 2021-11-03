@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}New Depute{% endblock %}
+
+{% block body %}
+    <h1>Create new Depute</h1>
+
+    {{ include('depute/_form.html.twig') }}
+
+    <a href="{{ path('depute_index') }}">back to list</a>
+{% endblock %}

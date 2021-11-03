@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<style>
+body {
+
+	
+	background-image: url("{{ asset('images/articles/font9.jpg') }} ");
+     height: 150px; /* You must set a specified height */
+     width: 106%;
+     background-position: center; /* Center the image */
+     background-repeat: no-repeat;
+}
+.card{
+background: linear-gradient(to right bottom, white, #4e846d);
+width:80%;
+}
+
+</style>
+<div class="row "  > 
+<div class="col-md-4"  > </div> 
+
+    <div class="col-md-4"  >
+     <div  style="position:center" >                                                                                 
+                    <div class="card" style= "border-radius:20px;border-width:5px" >
+                          <h3 class="card-header" style="text-align:center">Assemblee Nationale</h3>
+                                
+                        <img class="card-img-top" style="width=50px ;height:90px" src= "{{ asset('images/articles/logo1.png') }} "  alt="Card image">
+                             <div class="card-body">
+                                    <form method="post" >
+
+                                            {% if error %}
+                                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                            {% endif %}
+
+                                            {% if app.user %}
+                                                <div class="mb-3">
+                                                    You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Deconnexion</a>
+                                                </div>
+                                            {% endif %}
+
+                                            <h1 class="h3 mb-3 font-weight-normal" style="text-align:center">SGPAP</h1>
+
+                                            <label for="inputEmail">Email</label>
+                                            <input  type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus style="width:100%">
+                                            <label for="inputPassword">Password</label>
+                                            <input type="password" name="password" id="inputPassword" class="form-control" required style="width:100%">
+
+                                            <input type="hidden" name="_csrf_token"
+                                                value="{{ csrf_token('authenticate') }}"
+                                            >
+
+                                            
+                                            
+                                                <div class="checkbox mb-3">
+                                                    <label>
+                                                        <input type="checkbox" name="_remember_me"> Remember me
+                                                    </label>
+                                                </div>
+                                            
+
+                                            <button class="btn btn-lg btn-primary" type="submit">
+                                                Se connecter
+                                            </button>
+
+                                        <br/>
+                                 </form>
+                             </div>
+                             
+                                    <div class="card-footer text-muted">
+                                       <p style="text-align:center;color:black"> Direction Administrative</p>
+                                    </div>
+                     </div>
+         </div>    
+     </div>     
+
+<div class="col-md-4"  > </div> 
+</div> 
+
+
+
+{% endblock %}

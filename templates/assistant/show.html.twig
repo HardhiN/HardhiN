@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Assistant{% endblock %}
+
+{% block body %}
+    <h1>Assistant</h1>
+
+<div class="row">
+<div class="col-md-6">
+    <table  class="table table-bordered">
+
+         <tbody class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <td>{{ assistant.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ assistant.AssNom }}</td>
+            </tr>
+            <tr>
+                <th>Prenoms</th>
+                <td>{{ assistant.AssPrenom }}</td>
+            </tr>
+            <tr>
+                <th>Date de Nomination</th>
+                <td>{{ assistant.DateNomination ? assistant.DateNomination|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Arrete de Nomination</th>
+                <td>{{ assistant.ArreteNomination }}</td>
+            </tr>
+            <tr>
+                <th>Date d'Abrogation</th>
+                <td>{{ assistant.DateAbrogation ? assistant.DateAbrogation|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Arrete d'Abrogation</th>
+                <td>{{ assistant.ArreteAbrog }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ assistant.Titre }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ assistant.Telephone }}</td>
+            </tr>
+            <tr>
+                <th>Observation</th>
+                <td>{{ assistant.Observation }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('assistant_index') }}">Retour à la liste</a><br/>
+
+    <a href="{{ path('assistant_edit', {'id': assistant.id}) }}">editer</a>
+
+    {{ include('assistant/_delete_form.html.twig') }}
+  </div>
+</div>
+
+{% endblock %}
